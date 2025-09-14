@@ -1,11 +1,13 @@
-from .views import list_books, LibraryDetailView
 from django.urls import path
-from . import views
+from .views import list_books, LibraryDetailView, register_view, login_view, logout_view
 
 urlpatterns = [
-    # Function-based view: list all books
-    path('books/', views.list_books, name='list_books'),
+    # Existing views
+    path("books/", list_books, name="list_books"),
+    path("library/<int:pk>/", LibraryDetailView.as_view(), name="library_detail"),
 
-    # Class-based view: show details of a specific library
-    path('library/<int:pk>/', views.LibraryDetailView.as_view(), name='library_detail'),
+    # Auth views
+    path("register/", register_view, name="register"),
+    path("login/", login_view, name="login"),
+    path("logout/", logout_view, name="logout"),
 ]
