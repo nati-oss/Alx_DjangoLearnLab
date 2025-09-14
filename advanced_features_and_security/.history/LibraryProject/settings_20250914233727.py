@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     "relationship_app",
     'LibraryProject.bookshelf',
     'csp',
-    'django_extensions',
+    'django_extensions'
 ]
 
 # Add middleware

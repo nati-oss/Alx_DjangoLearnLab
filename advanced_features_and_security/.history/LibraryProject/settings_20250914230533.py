@@ -15,20 +15,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 # SESSION_COOKIE_SECURE ensures session cookies are only sent over HTTPS
 # CSP settings restrict content loading to trusted sources to reduce XSS risk
 
-# Use these only for local HTTPS testing
-SECURE_SSL_REDIRECT = False
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-
-# Security headers
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = 'DENY'
-
-# Debug for local testing
-DEBUG = False
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-
 
 from pathlib import Path
 
@@ -60,7 +46,6 @@ INSTALLED_APPS = [
     "relationship_app",
     'LibraryProject.bookshelf',
     'csp',
-    'django_extensions',
 ]
 
 # Add middleware

@@ -26,7 +26,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 
 # Debug for local testing
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     "relationship_app",
     'LibraryProject.bookshelf',
     'csp',
-    'django_extensions',
 ]
 
 # Add middleware
