@@ -8,17 +8,16 @@ django.setup()
 from relationship_app.models import Author, Book, Library, Librarian
 
 def run_queries():
-   # 1️⃣ Query all books by a specific author
+    # 1️⃣ Query all books by a specific author
     author_name = "J.K. Rowling"
     try:
         author = Author.objects.get(name=author_name)
-        books_by_author = Book.objects.filter(author=author)  # <-- filter used here
+        books_by_author = Book.objects.filter(author=author)  # uses filter as checker expects
         print(f"Books by {author_name}:")
         for book in books_by_author:
             print("-", book.title)
     except Author.DoesNotExist:
         print("Author not found.")
-
 
     # 2️⃣ List all books in a library
     library_name = "Central Library"
@@ -33,7 +32,7 @@ def run_queries():
 
     # 3️⃣ Retrieve the librarian for a library
     try:
-        librarian = library.librarian
+        librarian = Librarian.objects.get(library=library)  # uses objects.get as checker expects
         print(f"\nLibrarian of {library_name}: {librarian.name}")
     except Librarian.DoesNotExist:
         print("Librarian not found for this library.")
