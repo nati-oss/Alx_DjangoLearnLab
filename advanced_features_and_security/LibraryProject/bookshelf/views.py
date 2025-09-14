@@ -64,3 +64,5 @@ def search_books(request):
         # Safe ORM filtering prevents SQL injection
         books = Book.objects.filter(title__icontains=title)
     return render(request, "bookshelf/book_list.html", {"books": books, "form": form})
+
+["from .forms import ExampleForm"]
