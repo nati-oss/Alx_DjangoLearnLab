@@ -1,7 +1,6 @@
-# LibraryProject/relationship_app/views.py
 from django.shortcuts import render
 from django.views.generic import DetailView
-from .models import Book, Library  # ✅ exact import checker expects
+from .models import Book, Library
 
 # Function-based view: list all books
 def list_books(request):
@@ -11,5 +10,5 @@ def list_books(request):
 # Class-based view: display library details and all its books
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = 'relationship_app/library_detail.html'  # ✅ exact path for checker
-    context_object_name = 'library'  # ✅ variable name 'library'
+    template_name = 'relationship_app/library_detail.html'
+    context_object_name = 'library'
