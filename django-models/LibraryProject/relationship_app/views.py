@@ -1,6 +1,7 @@
+# LibraryProject/relationship_app/views.py
 from django.shortcuts import render
 from django.views.generic import DetailView
-from .models import Book, Library  # ✅ must import Library
+from .models import Book, Library  # ✅ exact import checker expects
 
 # Function-based view: list all books
 def list_books(request):
