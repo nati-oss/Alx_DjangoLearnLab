@@ -1,7 +1,19 @@
 # LibraryProject/bookshelf/models.py
+"""
+Permissions and Groups Setup:
+
+- Custom permissions added to Book model: can_view, can_create, can_edit, can_delete
+- Groups created: Editors, Viewers, Admins
+    * Editors: can_create, can_edit
+    * Viewers: can_view
+    * Admins: can_view, can_create, can_edit, can_delete
+- Views are protected using @permission_required decorator to enforce these permissions.
+"""
 
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+
+from django.conf import settings
 
 # Custom User Manager
 class CustomUserManager(BaseUserManager):
@@ -28,3 +40,20 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=255)
+    author = models.ForeignKey('relationship_app.Author', on_delete=models.CASCADE)
+    publication_year = models.PositiveIntegerField(null=True, blank=True)
+
+    class Meta:
+        permissions = [
+            ("can_view", "Can view book"),
+            ("can_create", "Can create book"),
+            ("can_edit", "Can edit book"),
+            ("can_delete", "Can delete book"),
+        ]
+
+    def __str__(self):
+        return self.title
