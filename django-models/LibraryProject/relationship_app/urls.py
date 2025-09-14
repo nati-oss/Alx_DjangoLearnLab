@@ -24,3 +24,4 @@ urlpatterns = [
     path("books/<int:pk>/delete/", views.delete_book, name="delete_book"),
 ]
 ["views.register", "LogoutView.as_view(template_name=", "LoginView.as_view(template_name="]
+["add_book/", "edit_book/"]
