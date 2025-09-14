@@ -1,10 +1,15 @@
-from django.urls import path
-from . import views
+# relationship_app/views.py
+from django.shortcuts import render
+from django.views.generic import DetailView
+from .models import Book, Library  # ✅ must import Library
 
-urlpatterns = [
-    # Function-based view for all books
-    path('books/', views.list_books, name='list_books'),
+# Function-based view: list all books
+def list_books(request):
+    books = Book.objects.all()
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
-    # Class-based view for library detail
-    path('library/<int:pk>/', views.LibraryDetailView.as_view(), name='library_detail'),
-]
+# Class-based view: library details
+class LibraryDetailView(DetailView):
+    model = Library
+    template_name = 'relationship_app/library_detail.html'  # ✅ must match this path
+    context_object_name = 'library'  # ✅ variable named 'library'
