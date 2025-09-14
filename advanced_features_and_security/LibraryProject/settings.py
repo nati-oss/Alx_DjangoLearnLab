@@ -128,3 +128,4 @@ LOGOUT_REDIRECT_URL = "login"
 
 
 AUTH_USER_MODEL = "relationship_app.CustomUser"
+AUTH_USER_MODEL = "bookshelf.CustomUser"
