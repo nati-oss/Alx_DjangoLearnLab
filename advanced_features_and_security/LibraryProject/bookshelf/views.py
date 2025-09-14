@@ -2,6 +2,17 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import permission_required
 from .models import Book
 from .forms import BookForm
+# bookshelf/views.py
+from django.shortcuts import render, get_object_or_404
+from .models import Book
+from .forms import BookSearchForm  # if you have a search form
+
+# DEBUG=False disables detailed error pages to prevent information leakage
+# SECURE_BROWSER_XSS_FILTER enables browser-level XSS protection
+# CSRF_COOKIE_SECURE ensures CSRF cookies are only sent over HTTPS
+# SESSION_COOKIE_SECURE ensures session cookies are only sent over HTTPS
+# CSP settings restrict content loading to trusted sources to reduce XSS risk
+
 
 # View book list (requires can_view)
 @permission_required("bookshelf.can_view", raise_exception=True)
@@ -44,3 +55,12 @@ def delete_book(request, pk):
     return render(request, "bookshelf/book_confirm_delete.html", {"book": book})
 
 ["book_list"]
+
+def search_books(request):
+    form = BookSearchForm(request.GET)
+    books = Book.objects.none()
+    if form.is_valid():
+        title = form.cleaned_data.get("title")
+        # Safe ORM filtering prevents SQL injection
+        books = Book.objects.filter(title__icontains=title)
+    return render(request, "bookshelf/book_list.html", {"books": books, "form": form})

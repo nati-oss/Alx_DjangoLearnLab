@@ -16,6 +16,13 @@ from django.contrib.auth.decorators import permission_required
 from .models import Book
 from .forms import BookForm  # You need a simple ModelForm for Book
 
+# DEBUG=False disables detailed error pages to prevent information leakage
+# SECURE_BROWSER_XSS_FILTER enables browser-level XSS protection
+# CSRF_COOKIE_SECURE ensures CSRF cookies are only sent over HTTPS
+# SESSION_COOKIE_SECURE ensures session cookies are only sent over HTTPS
+# CSP settings restrict content loading to trusted sources to reduce XSS risk
+
+
 
 
 # Function-based view: list all books

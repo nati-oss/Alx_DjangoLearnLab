@@ -9,6 +9,12 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+# DEBUG=False disables detailed error pages to prevent information leakage
+# SECURE_BROWSER_XSS_FILTER enables browser-level XSS protection
+# CSRF_COOKIE_SECURE ensures CSRF cookies are only sent over HTTPS
+# SESSION_COOKIE_SECURE ensures session cookies are only sent over HTTPS
+# CSP settings restrict content loading to trusted sources to reduce XSS risk
+
 
 from pathlib import Path
 
@@ -39,7 +45,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "relationship_app",
     'LibraryProject.bookshelf',
+    'csp',
 ]
+
+# Add middleware
+MIDDLEWARE += ['csp.middleware.CSPMiddleware']
+
+# Define CSP rules
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'", "data:")
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -130,3 +147,24 @@ LOGOUT_REDIRECT_URL = "login"
 AUTH_USER_MODEL = "relationship_app.CustomUser"
 AUTH_USER_MODEL = "bookshelf.CustomUser"
 ["bookshelf.CustomUser"]
+
+# SECURITY SETTINGS
+DEBUG = False  # Make sure to turn off in production
+
+# XSS and content type protections
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+
+# Cookies over HTTPS only
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Optional: Content Security Policy (CSP) using django-csp
+# Install with: pip install django-csp
+INSTALLED_APPS += ['csp']
+MIDDLEWARE += ['csp.middleware.CSPMiddleware']
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'",)
