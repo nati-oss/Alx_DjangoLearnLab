@@ -1,18 +1,14 @@
-from django.test import TestCase
 from django.urls import reverse
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 from rest_framework import status
 from django.contrib.auth.models import User
 from .models import Author, Book
 
 
-class BookAPITests(TestCase):
-    """Tests for Book API endpoints"""
+class BookAPITests(APITestCase):
+    """Tests for Book API endpoints using APITestCase"""
 
     def setUp(self):
-        # Setup client and test data
-        self.client = APIClient()
-
         # Create a test user
         self.user = User.objects.create_user(username="testuser", password="password123")
 
@@ -48,7 +44,7 @@ class BookAPITests(TestCase):
     def test_create_book_requires_authentication(self):
         data = {"title": "New Book", "publication_year": 2020, "author": self.author.id}
         response = self.client.post(self.create_url, data)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)  # Not logged in
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_create_book_authenticated(self):
         self.client.login(username="testuser", password="password123")
@@ -87,5 +83,5 @@ class BookAPITests(TestCase):
         Book.objects.create(title="A Book", publication_year=1990, author=self.author)
         response = self.client.get(self.list_url, {"ordering": "publication_year"})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # Check if first book is the older one
+        # First book should be the oldest
         self.assertEqual(response.data[0]["title"], "A Book")
